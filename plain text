@@ -1,0 +1,16 @@
+blog-website/
+├── node_modules/
+├── public/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── script.js
+├── views/
+│   ├── index.ejs
+│   ├── post.ejs
+│   └── newpost.ejs
+├── models/
+│   └── Post.js
+├── routes/
+│   └── index.js
+└── server.js
