@@ -1,0 +1,45 @@
+// routes/index.js
+const express = require('express');
+const router = express.Router();
+const Post = require('../models/Post');
+
+// Index Route - List all posts
+router.get('/', async (req, res) => {
+    try {
+        const posts = await Post.find().sort({ createdAt: 'desc' });
+        res.render('index', { posts });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+// Show Route - Display a specific post
+router.get('/posts/:id', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        res.render('post', { post });
+    } catch (err) {
+        res.status(404).send('Post not found');
+    }
+});
+
+// New Post Route - Form to create a new post
+router.get('/posts/new', (req, res) => {
+    res.render('newpost');
+});
+
+// Create Post Route - Save a new post
+router.post('/posts', async (req, res) => {
+    const post = new Post({
+        title: req.body.title,
+        content: req.body.content
+    });
+    try {
+        await post.save();
+        res.redirect('/');
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+module.exports = router;
